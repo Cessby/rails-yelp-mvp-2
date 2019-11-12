@@ -1,0 +1,31 @@
+  <div class="text-center">
+    <h1> Restaurants </h1>
+  </div>
+<hr>
+
+  <div>
+    <% @restaurants.each do |restaurant| %>
+       <li class="list-group-item d-flex justify-content-between align-items-center">
+        <span><h2><%= link_to restaurant.name , restaurant_path(restaurant) %>
+        <% stars = "⭐️" %>
+        <% count = 0 %>
+        <% restaurant.reviews.each do |review| %>
+          <% count += review.rating %>
+        <% end %>
+          <%=(count.fdiv(restaurant.reviews.length)).round(1).nan? ? "" : (count.fdiv(restaurant.reviews.length)).round(1) %>
+        <% if count >= 1 %>
+         <%=stars * (count / restaurant.reviews.length) %>
+        <% else %>
+         <%= %>
+        <% end%>
+        </h2>
+        <h3><%= "(#{restaurant.category.capitalize})" %></h3>
+        </span>
+        <h2>
+         <%= link_to "🗑", restaurant_path(restaurant),
+          method: :delete,
+          data: { confirm: "Are you sure that you want to delete it ?" } %>
+        </h2>
+      </li>
+    <% end %>
+  </div>
