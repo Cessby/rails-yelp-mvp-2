@@ -19,7 +19,14 @@
       <% @restaurant.reviews.each do |review| %>
       <% count += review.rating %>
       <% end %>
-    <h3> <%= (count.fdiv(@restaurant.reviews.length)).round(1) %> <%= stars * (count / @restaurant.reviews.length) %></h3>
+    <h3>
+      <% if count >= 1 %>
+      <%=stars * (count / @restaurant.reviews.length) %>
+      <% else %>
+      <%= %>
+      <% end%>
+      <%=(count.fdiv(@restaurant.reviews.length)).round(1).nan? ? "" : (count.fdiv(@restaurant.reviews.length)).round(1) %>
+    </h3>
   </div>
 
 
@@ -43,6 +50,7 @@
       <%= f.submit "add a review", class: "btn btn-primary" %>
     <% end %>
   </div>
-
-  <%= link_to "Restaurant list", restaurants_path, class: "btn btn-primary"%>
+  <div class="text-center">
+  <%= link_to "Return Home", restaurants_path, class: "btn btn-warning"%>
+  </div>
 </div>
